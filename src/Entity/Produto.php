@@ -19,19 +19,19 @@ class Produto
 
 	/**
 	 * @ORM\Column(type="string", length=100)
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(message="Campo nome não pode ser vázio!")
 	 */
     private $nome;
 
 	/**
 	 * @ORM\Column(type="decimal", scale=2)
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(message="Campo preço não pode ser vázio!")
 	 */
     private $preco;
 
 	/**
 	 * @ORM\Column(type="text")
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(message="Campo descrição não pode ser vázio!")
 	 */
     private $descricao;
 
