@@ -5,11 +5,25 @@
 {% endblock %}
 
 {% block body %}
+
+    {% for flashmessage in app.session.flashbag.get('sucesso') %}
+        <div class="alert alert-success">
+            {{ flashmessage }}
+        </div>
+    {% endfor %}
+
+    {% for flashmessage in app.session.flashbag.get('warning') %}
+        <div class="alert alert-warning">
+            {{ flashmessage }}
+        </div>
+    {% endfor %}
+
     <h1>Listando produtos</h1>
+    <hr>
 
     <div class="row">
         <div class="col-md-12">
-            <a href="" class="btn btn-lg btn-primary float-right">Adicionar produto</a>
+            <a href="{{ path('cadastrar_produto') }}" class="btn btn-lg btn-primary float-right">Adicionar produto</a>
         </div>
     </div>
 
@@ -27,15 +41,15 @@
                 <tr>
                     <td>{{ produto.id }}</td>
                     <td>{{ produto.nome }}</td>
-                    <td>{{ produto.preco }}</td>
+                    <td>R$ {{ produto.preco|number_format(2, ',', '.') }}</td>
                     <td>
-                        <a class="btn btn-sm btn-warning">
+                        <a class="btn btn-sm btn-warning" href="{{ path('visualizar_produto', {'id': produto.id}) }}">
                             <i class="fa fa-eye"></i>
                         </a>
-                        <a class="btn btn-sm btn-success">
+                        <a class="btn btn-sm btn-success" href="{{ path('editar_produto', {'id': produto.id}) }}">
                             <i class="fa fa-pen"></i>
                         </a>
-                        <a class="btn btn-sm btn-danger">
+                        <a class="btn btn-sm btn-danger bt_excluir_produto" href="{{ path('apagar_produto', {'id': produto.id}) }}">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>
@@ -43,6 +57,22 @@
             {% else %}
                 Nenhum produto cadastrado.
             {% endfor %}
+
+            {% block javascripts %}
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $(".bt_excluir_produto").click(function(ev) {
+                            ev.preventDefault();
+
+                            var url = $(this).prop('href');
+
+                            if (confirm("Deseja excluir esse produto?")) {
+                                window.location = url;
+                            }
+                        });
+                    });
+                </script>
+            {% endblock %}
         </tbody>
     </table>
 {% endblock %}
