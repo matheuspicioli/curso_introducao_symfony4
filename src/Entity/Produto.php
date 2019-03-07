@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProdutoRepository")
@@ -18,13 +19,21 @@ class Produto
 
 	/**
 	 * @ORM\Column(type="string", length=100)
+	 * @Assert\NotBlank()
 	 */
     private $nome;
 
 	/**
 	 * @ORM\Column(type="decimal", scale=2)
+	 * @Assert\NotBlank()
 	 */
     private $preco;
+
+	/**
+	 * @ORM\Column(type="text")
+	 * @Assert\NotBlank()
+	 */
+    private $descricao;
 
 	/**
 	 * @return mixed
@@ -79,4 +88,23 @@ class Produto
 		$this->preco = $preco;
 		return $this;
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getDescricao()
+	{
+		return $this->descricao;
+	}
+
+	/**
+	 * @param mixed $descricao
+	 * @return Produto
+	 */
+	public function setDescricao($descricao)
+	{
+		$this->descricao = $descricao;
+		return $this;
+	}
+
 }
